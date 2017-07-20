@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Functional Programming for WordPress Developers</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+		<style type="text/css">
+			@import url(https://fonts.googleapis.com/css?family=Yanone+Kaffeesatz);
+			@import url(https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic);
+			@import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
+			@font-face: url('TofinoPersonal_OTF/Tofino-Regular.otf');
+			@font-face: url('TofinoPersonal_OTF/Tofino-Black.otf');
+			body {
+				font-family: 'Droid Serif';
+				font-size: 24px;
+			}
+			.remark-slide-content {
+				background-color: #111;
+				color: #ccc;
+			}
+			h1, h2, h3 {
+				font-family: 'Yanone Kaffeesatz';
+				font-weight: normal;
+				color: #FE5006;
+			}
+			a, a:visited {
+				color: #FE5006;
+				text-decoration: none;
+			}
+			.remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; text-align: left; font-size: 1.1rem;}
+			.left-half {
+				width: 48%;
+				float: left;
+			}
+			.right-half {
+				width: 48%;
+				float: right;
+			}
+			.right-sidebar {
+				width: 20%;
+				height: 110%;
+				float: right;
+				display: inline-block;
+				position: relative;
+				top: -40px;
+			}
+			.right-sidebar > * {
+				height: 100%;
+				width: 100%;
+			}
+			.right-sidebar-1948 {
+				background: url('09_1948-superman.jpg') 40% 50% no-repeat;
+				background-size: cover;
+			}
+			.right-sidebar-1958 {
+				background: url('timeline_computers_1958.rca501.jpg') 13% 50% no-repeat;
+				background-size: cover;
+			}
+			.right-sidebar-1965 {
+				background: url('Gemini-5-launch-LC-19-Kennedy-Space-Center21-August-1965.jpg') 45% 50% no-repeat;
+				background-size: cover;
+			}
+			.right-sidebar-1977 {
+				background: url('star-wars-rpg-1401x788-a01d7a3d-3632-4f3c-8e4d-fe4263345066.png') 73% 50% no-repeat;
+				background-size: cover;
+			}
+			.right-sidebar .text {
+				font-family: 'Tofino Black';
+				display: block;
+				transform: rotate(.25turn) translate(50%, -60%);
+				position: absolute;
+				font-size: 5rem;
+				color: #fff;
+				text-shadow: 2px 2px #000000;
+			}
+			.body-with-sidebar {
+				float: left;
+				width: 75%;
+			}
+			.remark-slide-content blockquote p {
+				font-style: italic;
+				text-align: justify;
+			}
+			.remark-slide-content blockquote footer:before {
+				text-align: left;
+				content: "- ";
+			}
+			.remark-slide-content blockquote footer {
+				margin-top: -1rem;
+			}
+			ul {
+				text-align: left;
+			}
+			li {
+				margin-bottom: .25em;
+				font-size: 2rem;
+			}
+			h1, h2, h3, h4, h5 {
+				font-family: 'Tofino Black';
+			}
+			.remark-slide-content h1 {
+				font-size: 2.8rem;
+				margin-bottom: 0;
+			}
+			.remark-slide-content h2 {
+				font-size: 2rem;
+			}
+		</style>
+	</head>
+	<body>
+		<textarea id="source">
+
+class: center, middle
+
+# Functional Programming for WordPress Developers
+## Dave Ross • @csixty4 • @10up
+###WordCamp Boston 2017
+
+---
+class: center, middle
+
+# Functional Programming Utils
+[https://github.com/daveross/functional-programming-utils](https://github.com/daveross/functional-programming-utils)
+
+---
+class: center, middle
+
+# This presentation has no:
+* Functors
+* Endofunctors
+* Monoids
+* Monads
+
+---
+class: center, middle
+
+# Some History
+(because that's my thing)
+
+---
+class: middle
+
+.right-sidebar[
+.right-sidebar-1948[
+.text[1948]
+]
+]
+.body-with-sidebar[
+# Imperitive Programming
+
+```php
+<?php
+
+$colors = ['red', 'orange', 'yellow', 'green', 'blue'];
+
+$colorIndex = 0;
+outputColor:
+	print "The color is $colors[$colorIndex]" . "\n";
+	$colorIndex = $colorIndex + 1;
+	if($colorIndex < count( $colors )) {
+		goto outputColor;
+	}
+```
+]
+---
+class: middle
+
+.right-sidebar[
+.right-sidebar-1958[
+.text[1958]
+]
+]
+
+.body-with-sidebar[
+# Procedural Programming
+```php
+<?php
+
+function outputColor($color) {
+	print "The color is $color" . "\n";
+}
+
+$colors = ['red', 'orange', 'yellow', 'green', 'blue'];
+
+foreach($colors as $color) {
+	outputColor( $color );
+}
+```
+]
+---
+class: middle
+
+.right-sidebar[
+.right-sidebar-1965[
+.text[1965]
+]
+]
+.body-with-sidebar[
+# Object-Oriented Programming
+```php
+<?php
+
+class Color {
+	function __construct( $color ) {
+		$this->color = $color;
+	
+	}
+		
+	public function output() {
+		print "The color is $this->color" . "\n";
+	}
+}
+
+$colors = ['red', 'orange', 'yellow', 'green', 'blue'];
+
+foreach($colors as $color) {
+	$theColor = new Color( $color );
+	$theColor->output();
+}
+```
+]
+---
+class: middle
+
+.right-sidebar[
+.right-sidebar-1977[
+.text[1977]
+]
+]
+.body-with-sidebar[
+# Functional Programming
+```php
+<?php
+
+function getColors() {
+	return new SplFixedArray::fromArray(
+		['red', 'orange', 'yellow', 'green', 'blue']
+	);
+}
+
+array_walk( getColors(), function( $color ) {
+	print "The color is $color" . "\n";
+} );
+```
+]
+---
+class: center, middle
+
+# Why Functional Programming?
+* More declarative
+* Complex behavior from small, tested components
+* Prevents certain types of errors
+* Intellectual challenge
+---
+class: center, middle
+
+# Why Not Functional Programming?
+* Unusual
+* PHP &amp; JavaScript aren't truly functional
+* Can't use parallelism
+
+---
+class: center, middle
+
+# First Class Functions
+
+> In computer science, a programming language is said to have first-class functions if…the language supports passing functions as arguments to other functions, returning them as the values from other functions, and assigning them to variables or storing them in data structures. <footer>Wikipedia</footer>
+
+```php
+<?php
+
+$outputTheValue = function( $value ) {
+	echo $value;
+}
+
+function doSomethingToFive( $fn ) {
+	$fn( 5 );
+}
+
+doSomethingToFive( $outputTheValue );
+```
+---
+class: center, middle
+
+# Principles of Functional Programming
+* Minimal state
+* Referential transparency
+* No side effects
+---
+class: center, middle
+
+# Minimal State
+
+.left-half[
+## Stateful
+```php
+<?php
+
+$colors = ['red', 'orange', 'yellow'];
+
+foreach($colors as $color) {
+    print "$color" . "\n";
+}
+
+print $color;
+// yelow
+```
+]
+.right-half[
+## Almost no state
+```php
+<?php
+
+function refArray( array $arr ) {
+  return array_reverse(
+    array_reverse( $arr )
+  );
+}
+
+array_walk(
+	refArray(
+		['red', 'orange', 'yellow']
+	),
+	function( $color ) {
+		print "$color" . "\n";
+	}
+);
+
+print $color;
+// Undefined variable: color
+```
+]
+---
+
+class: center, middle
+
+# Referential Transparency
+> An expression is said to be referentially transparent if it can be replaced with its corresponding value without changing the program's behavior. <footer>Wikipedia</footer>
+
+```php
+<?php
+
+/**
+ * Convert a value to non-negative integer.
+ *
+ * @since 2.5.0
+ *
+ * @param mixed $maybeint Data you wish to have converted to a non-negative integer.
+ * @return int A non-negative integer.
+ */
+function absint( $maybeint ) {
+	return abs( intval( $maybeint ) );
+}
+
+$x = absint( -5.2 );
+
+$x = 5;
+
+```
+
+---
+class: center, middle
+
+# No Side Effects
+
+```php
+$x = 5;
+
+function outputValue( $value ) {
+
+	echo "The value is $value \n";
+
+	// This is a side-effect. Why does it do this?
+	$x = 23;
+
+}
+
+outputValue( $x );
+```
+
+---
+class: middle
+
+# Pure Functions
+
+* Referentially transparent
+* No side-effects
+
+![Graph of f(x) = x + 1](graph.png)
+---
+class: center, middle
+
+# Not every function can be pure today
+## Especially with WordPress
+* Isolate impurities
+* Use the Proxy pattern to build a seam between your code &amp; WordPress
+* Mark impure functions &amp; refactor later
+
+---
+class: center, middle
+
+# Can we get the function down to one parameter?
+* Single parameter functions are easier to test
+* Encourage re-use of exisitng functions
+---
+class: center, middle
+# Partial Application
+
+```php
+<?php
+
+/**
+ * Partially apply a function
+ *
+ * @param callable $x
+ * @param mixed    $y
+ *
+ * @return \Closure
+ */
+function partially_apply(callable $x, $y)
+{
+    return function () use ($x, $y) {
+        return call_user_func_array($x, array_merge(array( $y ), func_get_args()));
+    };
+}
+
+// Normal
+add_action( 'init', 'foo' );
+
+// Partial Application
+$add_init_action = partially_apply( 'add_action', 'init' );
+$add_init_action( 'foo' );
+
+```
+---
+class: center, middle
+
+# Composition
+
+* Multiple function "Pipeline"
+* Each takes one parameter
+* Returns value of the same type
+
+---
+class: center, middle
+
+# Composition
+
+```php
+<?php
+
+function compose() {
+
+    $fs = array_reverse(func_get_args());
+
+    return function ($a) use ($fs) {
+
+        $b = $a;
+        foreach ($fs as $fn) {
+            $b = $fn( $b );
+        }
+
+        return $b;
+
+    };
+
+}
+
+$pipeline = compose( 'str_rot13', 'strrev', 'strtoupper' );
+
+echo $pipeline( 'Hello WordCamp Boston!' );
+// !ABGFBO CZNPQEBJ BYYRU
+```
+
+---
+class: center, middle
+
+# Build absint() with Composition
+```php
+<?php
+
+/**
+ * Convert a value to non-negative integer.
+ *
+ * @since 2.5.0
+ *
+ * @param mixed $maybeint Data you wish to have converted to a non-negative integer.
+ * @return int A non-negative integer.
+ */
+function absint( $maybeint ) {
+	return abs( intval( $maybeint ) );
+}
+
+echo absint( -5.2 ); // 5
+```
+---
+class: center, middle
+
+# Build absint() with Composition
+
+```php
+<?php
+
+function compose() {
+
+    $fs = array_reverse(func_get_args());
+
+    return function ($a) use ($fs) {
+
+        $b = $a;
+        foreach ($fs as $fn) {
+            $b = $fn( $b );
+        }
+
+        return $b;
+
+    };
+
+}
+
+$absint = compose( 'abs', 'intval' );
+echo $absint( -5.2 ); // 5
+```
+---
+class: center, middle
+
+# Bonus: Currying (I promised)
+
+> …translating the evaluation of a function that takes multiple arguments…into evaluating a sequence of functions, each with a single argument. <footer>Wikipedia</footer>
+---
+class: center, middle
+
+# Bonus: Currying
+
+```php
+<?php
+
+/**
+ * Curry a function
+ *
+ * @param callable $x
+ * @param mixed    $y
+ *
+ * @return \Closure
+ */
+function curry(callable $x, $y)
+{
+    $params = array( $y );
+    $required_parameters =
+		( new \ReflectionFunction($x) )->getNumberOfRequiredParameters();
+    if (1 === $required_parameters) {
+        return call_user_func($x, $y);
+    } else {
+        return $fn = 
+		function ($z = null) use ($x, &$params, $required_parameters, &$fn) {
+			$params[] = $z;
+            if (count($params) === $required_parameters) {
+                return call_user_func_array($x, $params);
+            } else {
+                return $fn;
+            }
+        };
+    }
+}
+```
+---
+class: center, middle
+
+# Bonus: Currying
+
+```php
+<?php
+
+$get_big_article_post_meta = curry( 'get_post_meta', $big_article );
+
+$get_big_article_byline = $get_big_article_post_meta( 'byline' );
+
+echo $get_big_article_byline( true );
+```
+
+		</textarea>
+		<script src="https://remarkjs.com/downloads/remark-latest.min.js" type="text/javascript">
+		</script>
+		<script type="text/javascript">
+			var slideshow = remark.create();
+		</script>
+	</body>
+</html>
