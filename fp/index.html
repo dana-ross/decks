@@ -522,16 +522,12 @@ function compose() {
 
 }
 
+// $input ⇒ str_rot13() ⇒ strrev() ⇒ strtoupper() ⇒ $output
 $pipeline = compose( 'str_rot13', 'strrev', 'strtoupper' );
 
 echo $pipeline( 'Hello WordCamp Boston!' );
 // !ABGFBO CZNPQEBJ BYYRU
 ```
-
----
-class: center, middle
-
-$input ⇒ str_rot13() ⇒ strrev() ⇒ strtoupper() ⇒ $output
 ---
 class: center, middle
 
