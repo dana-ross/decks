@@ -1,0 +1,55 @@
+@font-face {
+  font-family: 'Droid Serif';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Droid Serif'), local('DroidSerif'), url(Droid_Serif/DroidSerif-Regular.ttf) format('ttf');
+}
+
+@font-face {
+  font-family: 'Droid Serif';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Droid Serif Bold'), local('DroidSerif-Bold'), url(Droid_Serif/DroidSerif-Bold.ttf) format('ttf');
+}
+
+@font-face {
+  font-family: 'Droid Serif';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Droid Serif Italic'), local('DroidSerif-Italic'), url(Droid_Serif/DroidSerif-Italic.ttf) format('ttf');
+}
+
+@font-face {
+  font-family: 'Ubuntu Mono';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Ubuntu Mono'), local('UbuntuMono-Regular'), url(Ubuntu_Mono/UbuntuMono-Regular.ttf) format('ttf');
+}
+
+@font-face {
+  font-family: 'Ubuntu Mono';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Ubuntu Mono Bold'), local('UbuntuMono-Bold'), url(Ubuntu_Mono/UbuntuMono-Bold.ttf) format('ttf');
+}
+
+@font-face {
+  font-family: 'Ubuntu Mono';
+  font-style: italic;
+  font-weight: 400;
+  src: local('Ubuntu Mono Italic'), local('UbuntuMono-Italic'), url(Ubuntu_Mono/UbuntuMono-Italic.ttf) format('ttf');
+}
+
+@font-face {
+    font-family: 'Tofino';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Tofino Personal Regular'), url(TofinoPersonal_OTF/Tofino-Regular.otf) format('otf');
+}
+
+@font-face {
+    font-family: 'Tofino';
+    font-style: normal;
+    font-weight: 900;
+    src: local('Tofino Personal Black'), url(TofinoPersonal_OTF/Tofino-Black.otf) format('otf');
+}
