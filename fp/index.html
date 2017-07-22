@@ -319,15 +319,9 @@ class: center, middle
 ```php
 <?php
 
-$outputTheValue = function( $value ) {
-	echo $value;
-}
+$sayHello = function() { echo 'Hello, Dolly!'; }
 
-function doSomethingToFive( $fn ) {
-	$fn( 5 );
-}
-
-doSomethingToFive( $outputTheValue );
+add_action( 'init', $sayHello );
 ```
 
 ---
