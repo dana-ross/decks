@@ -417,12 +417,19 @@ function outputValue( $value ) {
 	echo "The value is $value \n";
 
 	// This is a side-effect. Why does it do this?
-	$GLOBALS['x'] = 23;
+	// It's like a hidden parameter
+	if( 23 === $GLOBALS['x']) {
+		$GLOBALS['x'] = 25;
+	}
+	else {
+		$GLOBALS['x'] = 23;
+	}
 
 }
 
 outputValue( $x ); // The value is 5
-print $x; // 23
+outputValue( $x ); // The value is 23
+print $x; // 25
 ```
 
 ---
