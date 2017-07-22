@@ -357,16 +357,11 @@ print $color;
 ```php
 <?php
 
-function refArray( array $arr ) {
-  return array_reverse(
-    array_reverse( $arr )
-  );
-}
+$colors =
+	['red', 'orange', 'yellow'];
 
-array_walk(
-	refArray(
-		['red', 'orange', 'yellow']
-	),
+array_walk(	
+	$colors,
 	function( $color ) {
 		print "$color" . "\n";
 	}
@@ -463,21 +458,6 @@ class: center, middle
 ```php
 <?php
 
-/**
- * Partially apply a function
- *
- * @param callable $x
- * @param mixed    $y
- *
- * @return \Closure
- */
-function partially_apply(callable $x, $y)
-{
-    return function () use ($x, $y) {
-        return call_user_func_array($x, array_merge(array( $y ), func_get_args()));
-    };
-}
-
 // Normal
 add_action( 'init', 'foo' );
 
@@ -502,23 +482,6 @@ class: center, middle
 
 ```php
 <?php
-
-function compose() {
-
-    $fs = array_reverse(func_get_args());
-
-    return function ($a) use ($fs) {
-
-        $b = $a;
-        foreach ($fs as $fn) {
-            $b = $fn( $b );
-        }
-
-        return $b;
-
-    };
-
-}
 
 // $input ⇒ str_rot13() ⇒ strrev() ⇒ strtoupper() ⇒ $output
 $pipeline = compose( 'str_rot13', 'strrev', 'strtoupper' );
@@ -554,23 +517,6 @@ class: center, middle
 
 ```php
 <?php
-
-function compose() {
-
-    $fs = array_reverse(func_get_args());
-
-    return function ($a) use ($fs) {
-
-        $b = $a;
-        foreach ($fs as $fn) {
-            $b = $fn( $b );
-        }
-
-        return $b;
-
-    };
-
-}
 
 $absint = compose( 'abs', 'intval' );
 echo $absint( -5.2 ); // 5
