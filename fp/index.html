@@ -581,42 +581,7 @@ class: center, middle
 # Bonus: Currying (I promised)
 
 > …translating the evaluation of a function that takes multiple arguments…into evaluating a sequence of functions, each with a single argument. <footer>Wikipedia</footer>
----
-class: center, middle
 
-# Bonus: Currying
-
-```php
-<?php
-
-/**
- * Curry a function
- *
- * @param callable $x
- * @param mixed    $y
- *
- * @return \Closure
- */
-function curry(callable $x, $y)
-{
-    $params = array( $y );
-    $required_parameters =
-		( new \ReflectionFunction($x) )->getNumberOfRequiredParameters();
-    if (1 === $required_parameters) {
-        return call_user_func($x, $y);
-    } else {
-        return $fn = 
-		function ($z = null) use ($x, &$params, $required_parameters, &$fn) {
-			$params[] = $z;
-            if (count($params) === $required_parameters) {
-                return call_user_func_array($x, $params);
-            } else {
-                return $fn;
-            }
-        };
-    }
-}
-```
 ---
 class: center, middle
 
